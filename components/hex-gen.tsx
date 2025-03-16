@@ -9,18 +9,45 @@ import { generateHexColors } from '@jstock/hexgen';
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 
+type GridProps = {
+  start: string;
+  end: string;
+  count: number;
+};
+
+const ColorGrid = ({ start, end, count }: GridProps) => {
+  const colors = generateHexColors(start, end, count);
+
+  return (
+    colors && (
+      <div className="mt-4 grid grid-cols-4 md:grid-cols-8 xl:grid-cols-12 2xl:grid-cols-16 gap-4">
+        {colors.map((color, index) => {
+          return (
+            <Card
+              key={index}
+              className="py-2 gap-0 m-auto flex flex-col items-center"
+            >
+              <CardContent className="px-2">
+                <div
+                  className="size-16 rounded-md"
+                  style={{ backgroundColor: color }}
+                ></div>
+              </CardContent>
+              <CardFooter className="px-2 pt-2">
+                <Label>{color}</Label>
+              </CardFooter>
+            </Card>
+          );
+        })}
+      </div>
+    )
+  );
+};
+
 export function HexGen({ ...props }: SliderProps) {
   const [startColor, setStartColor] = useState('#000000');
   const [endColor, setEndColor] = useState('#ffffff');
   const [count, setCount] = useState([0]);
-  const [colors, setColors] = useState([startColor, endColor]);
-
-  useEffect(() => {
-    const newColors = generateHexColors(startColor, endColor, count[0]);
-    if (newColors) {
-      setColors(newColors);
-    }
-  }, [startColor, endColor, count]);
 
   const startColorChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStartColor(event.target.value);
@@ -78,22 +105,8 @@ export function HexGen({ ...props }: SliderProps) {
         </div>
       </div>
 
-      <div className="mt-4 grid grid-cols-4 md:grid-cols-8 gap-4">
-        {colors.map((color, index) => {
-          return (
-            <Card key={index} className="py-2 gap-0 flex flex-col items-center">
-              <CardContent className="px-2">
-                <div
-                  className="size-16 rounded-md"
-                  style={{ backgroundColor: color }}
-                ></div>
-              </CardContent>
-              <CardFooter className="px-2 pt-2">
-                <Label>{color}</Label>
-              </CardFooter>
-            </Card>
-          );
-        })}
+      <div>
+        <ColorGrid start={startColor} end={endColor} count={count[0]} />
       </div>
     </div>
   );
