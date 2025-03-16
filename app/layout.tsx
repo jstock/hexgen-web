@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Courier_Prime } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 
 const courier = Courier_Prime({
   weight: '400',
@@ -28,6 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="m-8 h-auto">{children}</div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

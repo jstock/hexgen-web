@@ -6,6 +6,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Card, CardContent, CardFooter } from './ui/card';
 import { generateHexColors } from '@jstock/hexgen';
+import { toast } from 'sonner';
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 
@@ -13,6 +14,11 @@ type GridProps = {
   start: string;
   end: string;
   count: number;
+};
+
+const copyToClipboard = (color: string) => {
+  navigator.clipboard.writeText(color);
+  toast(`${color} copied to clipboard`);
 };
 
 const ColorGrid = ({ start, end, count }: GridProps) => {
@@ -25,7 +31,11 @@ const ColorGrid = ({ start, end, count }: GridProps) => {
           return (
             <Card
               key={index}
-              className="py-2 gap-0 m-auto flex flex-col items-center"
+              className="py-2 gap-0 m-auto flex flex-col items-center cursor-pointer"
+              onClick={(handler) => {
+                copyToClipboard(color);
+              }}
+              title={`copy ${color} to clipboard`}
             >
               <CardContent className="px-2">
                 <div
