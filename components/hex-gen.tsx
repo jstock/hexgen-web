@@ -34,12 +34,15 @@ const ColorGrid = ({ start, end, count, includeAlpha }: GridProps) => {
   return (
     <>
       {colors && (
-        <div className="mt-4 grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-4">
+        <div className="mt-4 ml-auto mr-auto grid grid-cols-4 md:grid-cols-6 xl:grid-cols-8 2xl:grid-cols-10 gap-4">
           {colors.map((color, index) => {
             return (
               <Card
                 key={index}
-                className="py-2 gap-0 m-auto flex flex-col items-center cursor-pointer"
+                role="button"
+                aria-labelledby={`${index}Label`}
+                className="py-2 gap-0 mr-auto flex flex-col items-center cursor-pointer"
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 onClick={(handler) => {
                   copyToClipboard(color);
                 }}
@@ -52,7 +55,7 @@ const ColorGrid = ({ start, end, count, includeAlpha }: GridProps) => {
                   ></div>
                 </CardContent>
                 <CardFooter className="px-2 pt-2">
-                  <Label>{color}</Label>
+                  <Label id={`${index}Label`}>{color}</Label>
                 </CardFooter>
               </Card>
             );
@@ -110,9 +113,12 @@ export function HexGen({ ...props }: SliderProps) {
   return (
     <div>
       <div className="flex">
-        <div className="inline-flex items-center">
+        <div className="inline-flex items-center ">
           <h1 className="mr-6 text-3xl">hexgen</h1>
           <Button
+            name="randomize"
+            role="button"
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             onClick={(event) => {
               setStartColor(generateRandomHexColor(includeAlpha));
               setEndColor(generateRandomHexColor(includeAlpha));
@@ -133,13 +139,14 @@ export function HexGen({ ...props }: SliderProps) {
       </div>
 
       <div className="inline-flex mt-8">
-        <div className="w-26">
+        <div className="max-w-26">
           <Label htmlFor="start">Start</Label>
           <Input
             type="text"
             id="start"
             value={startColor}
             onChange={startColorChange}
+            className="text-sm"
           />
         </div>
 
@@ -161,13 +168,14 @@ export function HexGen({ ...props }: SliderProps) {
           </div>
         </div>
 
-        <div className="w-26">
+        <div className="max-w-26">
           <Label htmlFor="end">End</Label>
           <Input
             type="text"
             id="end"
             value={endColor}
             onChange={endColorChange}
+            className="text-sm"
           />
         </div>
       </div>
