@@ -1,5 +1,6 @@
 {
   "name": "hexgen-web",
+  "description": "A simple web application to auto-generate hex codes using @jstock/hexgen.",
   "version": "0.1.0",
   "private": true,
   "scripts": {
