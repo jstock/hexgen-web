@@ -7,6 +7,7 @@ import { Toaster } from '@/components/ui/sonner';
 const courier = Courier_Prime({
   weight: '400',
   style: 'normal',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
